@@ -1,0 +1,35 @@
+{
+  "name": "ra-appwrite",
+  "version": "1.0.0",
+  "repository": "git@github.com:marmelab/ra-appwrite.git",
+  "author": "François Zaninotto",
+  "license": "MIT",
+  "description": "Data and Auth provider for React Admin using Appwrite",
+  "files": [
+    "*.md",
+    "lib",
+    "esm",
+    "src"
+  ],
+  "main": "lib/index",
+  "module": "esm/index.js",
+  "types": "esm/index.d.ts",
+  "sideEffects": false,
+  "dependencies": {
+    "appwrite": "^17.0.0",
+    "lodash": "^4.17.21"
+  },
+  "peerDependencies": {
+    "react-admin": "^5.0.0"
+  },
+  "devDependencies": {
+    "react-admin": "^5.0.0"
+  },
+  "scripts": {
+    "build": "yarn run build-cjs && yarn run build-esm",
+    "build-cjs": "rimraf ./lib && tsc",
+    "build-esm": "rimraf ./esm && tsc --outDir esm --module es2015",
+    "watch": "tsc --outDir esm --module es2015 --watch",
+    "lint": "eslint --fix ./src"
+  }
+}
