@@ -25,6 +25,8 @@ import {
  *       ...
  *    </Admin>
  * );
+ *
+ * @deprecated Use react-admin's LoginWithEmail instead
  */
 export const LoginForm = ({
     disableForgotPassword,

@@ -26,15 +26,12 @@ You will need the project ID, database ID, and collection IDs to initialize your
 ```jsx
 import React from "react";
 import { Client } from 'appwrite';
-import {
-  appWriteDataProvider,
-  appWriteAuthProvider,
-  LoginForm
-} from 'ra-appwrite';
+import { appWriteDataProvider, appWriteAuthProvider } from 'ra-appwrite';
 import {
   Admin,
   EditGuesser,
   ListGuesser,
+  LoginWithEmail,
   Resource,
   ShowGuesser,
 } from "react-admin";
@@ -52,18 +49,12 @@ const dataProvider = appWriteDataProvider({
     },
 });
 const authProvider = appWriteAuthProvider(client);
-// custom login page with email and password instead of username and password
-const LoginPage = () => (
-    <Login>
-         <LoginForm />
-    </Login>
-);
 
 const App = () => (
     <Admin
         dataProvider={dataProvider}
         authProvider={authProvider}
-        loginPage={LoginPage}
+        loginPage={LoginWithEmail}
     >
         {/* the resource names must match the collection IDs */}
         <Resource name="contacts" list={ListGuesser} edit={EditGuesser} />

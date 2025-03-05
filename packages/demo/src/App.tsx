@@ -1,10 +1,12 @@
-import { Admin, Login, Resource, ListGuesser, EditGuesser } from 'react-admin';
-import { Client } from 'appwrite';
 import {
-    appWriteDataProvider,
-    appWriteAuthProvider,
-    LoginForm,
-} from 'ra-appwrite';
+    Admin,
+    LoginWithEmail,
+    Resource,
+    ListGuesser,
+    EditGuesser,
+} from 'react-admin';
+import { Client } from 'appwrite';
+import { appWriteDataProvider, appWriteAuthProvider } from 'ra-appwrite';
 
 import contacts from './contacts';
 
@@ -18,17 +20,12 @@ const dataProvider = appWriteDataProvider({
     collectionIds: JSON.parse(import.meta.env.VITE_APPWRITE_COLLECTIONIDS),
 });
 const authProvider = appWriteAuthProvider({ client });
-const LoginPage = () => (
-    <Login>
-        <LoginForm />
-    </Login>
-);
 
 const App = () => (
     <Admin
         dataProvider={dataProvider}
         authProvider={authProvider}
-        loginPage={LoginPage}
+        loginPage={LoginWithEmail}
     >
         <Resource name="contacts" {...contacts} />
         <Resource name="companies" list={ListGuesser} edit={EditGuesser} />
