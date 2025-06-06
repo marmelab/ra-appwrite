@@ -2,7 +2,7 @@
 
 This is a demo of the [AppWrite](https://appwrite.io/) adapter for [react-admin](https://github.com/marmelab/react-admin).
 
-To explore the source code, start with [src/App.tsx](https://github.com/marmelab/react-admin/blob/master/examples/crm/src/App.tsx).
+To explore the source code, start with [src/App.tsx](https://github.com/marmelab/ra-appwrite/blob/main/packages/demo/src/App.tsx).
 
 ## Requirements
 
@@ -51,7 +51,3 @@ It correctly bundles React in production mode and optimizes the build for the be
 
 The build is minified and the filenames include the hashes.<br>
 Your app is ready to be deployed!
-
-### `npm run deploy`
-
-Deploy the build to GitHub gh-pages.
