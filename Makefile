@@ -14,13 +14,13 @@ install: package.json ## install dependencies
 	fi
 
 run: ## run the demo
-	@yarn -s run-demo
+	@yarn run-demo
 
 run-prod: ## run the demo in prod
-	@yarn -s run-demo-prod
+	@yarn run-demo-prod
 
 build-demo: ## compile the demo to static js
-	@yarn -s build-demo
+	@yarn build-demo
 
 build-ra-appwrite:
 	@echo "Transpiling ra-appwrite files...";
@@ -30,18 +30,18 @@ build: build-ra-appwrite
 
 lint: ## lint the code and check coding conventions
 	@echo "Running linter..."
-	@yarn -s lint
+	@yarn lint
 
 prettier: ## prettify the source code using prettier
 	@echo "Running prettier..."
-	@yarn -s prettier
+	@yarn prettier
 
 test: build test-unit lint ## launch all tests
 
 test-unit: ## launch unit tests
 	@echo "Running unit tests...";
-	@yarn -s test-unit;
+	@yarn test-unit;
 
 test-unit-watch: ## launch unit tests and watch for changes
 	@echo "Running unit tests..."; 
-	@yarn -s test-unit --watch;
+	@yarn test-unit --watch;
