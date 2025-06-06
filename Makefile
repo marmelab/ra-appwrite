@@ -45,3 +45,7 @@ test-unit: ## launch unit tests
 test-unit-watch: ## launch unit tests and watch for changes
 	@echo "Running unit tests..."; 
 	@yarn test-unit --watch;
+
+db-seed: ## seed the database with initial data for the demo
+	@echo "Seeding the database...";
+	@cd ./packages/demo && yarn db-seed
