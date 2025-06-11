@@ -6,9 +6,6 @@ import preserveDirectives from 'rollup-preserve-directives';
 export default defineConfig(async ({ mode }) => {
     return {
         plugins: [react()],
-        define: {
-            'process.env': process.env,
-        },
         server: {
             port: 8000,
             open: true,
