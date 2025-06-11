@@ -49,3 +49,7 @@ test-unit-watch: ## launch unit tests and watch for changes
 db-seed: ## seed the database with initial data for the demo
 	@echo "Seeding the database...";
 	@cd ./packages/demo && yarn db-seed
+
+db-seed-force: ## seed the database with initial data for the demo, overriding any existing data
+	@echo "Force seeding the database...";
+	@cd ./packages/demo && yarn db-seed --force

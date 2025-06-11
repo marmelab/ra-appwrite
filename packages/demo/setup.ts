@@ -1,8 +1,10 @@
 import generateData from 'data-generator-retail';
 import * as appwrite from 'node-appwrite';
-import { ID, Permission, Role } from 'node-appwrite';
+import { ID, Permission, Role, Query } from 'node-appwrite';
 import dotenv from 'dotenv';
 import path from 'path';
+
+const forceSeed = process.argv.includes('--force');
 
 dotenv.config({ path: path.resolve(process.cwd(), '.env.local') });
 
@@ -23,16 +25,23 @@ const client = new appwrite.Client()
 
 const databases = new appwrite.Databases(client);
 
-const result = await databases.list();
+const result = await databases.list([Query.equal('name', ['admin'])]);
 
 if (result.total > 0) {
-    console.log('Database already exists, skipping creation.');
-    process.exit(0);
+    if (forceSeed) {
+        console.log('Database "admin" already exists. Deleting database...');
+        await databases.delete('admin');
+    } else {
+        console.log(
+            'Database "admin" already exists. Use --force to recreate it.'
+        );
+        console.log('Exiting.');
+        process.exit(0);
+    }
 }
 
 console.log('Creating database "admin"...');
-const databaseId = ID.unique();
-await databases.create(databaseId, 'admin');
+await databases.create('admin', 'admin');
 
 const collections = [
     'customers',
@@ -131,15 +140,9 @@ const collectionTypes: Record<CollectionName, Attribute[]> = {
     ],
 };
 
-const collectionIds = collections.reduce((acc, collection) => {
-    acc[collection] = ID.unique();
-    return acc;
-}, {} as Record<CollectionName, string>);
-
 for (const collectionName of collections) {
     console.log(`Creating collection "${collectionName}"...`);
-    const collectionId = collectionIds[collectionName];
-    await databases.createCollection(databaseId, collectionId, collectionName, [
+    await databases.createCollection('admin', collectionName, collectionName, [
         Permission.read(Role.users()),
         Permission.write(Role.users()),
         Permission.update(Role.users()),
@@ -148,14 +151,13 @@ for (const collectionName of collections) {
 }
 
 for (const [collectionName, attributes] of Object.entries(collectionTypes)) {
-    const collectionId = collectionIds[collectionName as CollectionName];
     console.log(`Creating attributes for collection "${collectionName}"...`);
     for (const attribute of attributes) {
         switch (attribute.type) {
             case 'string':
                 await databases.createStringAttribute(
-                    databaseId,
-                    collectionId,
+                    'admin',
+                    collectionName,
                     attribute.key,
                     attribute.size || 255,
                     attribute.required || false,
@@ -165,8 +167,8 @@ for (const [collectionName, attributes] of Object.entries(collectionTypes)) {
                 break;
             case 'integer':
                 await databases.createIntegerAttribute(
-                    databaseId,
-                    collectionId,
+                    'admin',
+                    collectionName,
                     attribute.key,
                     attribute.required || false,
                     undefined,
@@ -177,8 +179,8 @@ for (const [collectionName, attributes] of Object.entries(collectionTypes)) {
                 break;
             case 'float':
                 await databases.createFloatAttribute(
-                    databaseId,
-                    collectionId,
+                    'admin',
+                    collectionName,
                     attribute.key,
                     attribute.required || false,
                     undefined,
@@ -189,8 +191,8 @@ for (const [collectionName, attributes] of Object.entries(collectionTypes)) {
                 break;
             case 'boolean':
                 await databases.createBooleanAttribute(
-                    databaseId,
-                    collectionId,
+                    'admin',
+                    collectionName,
                     attribute.key,
                     attribute.required || false,
                     undefined,
@@ -199,8 +201,8 @@ for (const [collectionName, attributes] of Object.entries(collectionTypes)) {
                 break;
             case 'date':
                 await databases.createDatetimeAttribute(
-                    databaseId,
-                    collectionId,
+                    'admin',
+                    collectionName,
                     attribute.key,
                     attribute.required || false,
                     undefined,
@@ -217,16 +219,16 @@ console.log('Generating data...');
 const data = generateData.default();
 
 for (const collectionName of collections) {
-    const collectionId = collectionIds[collectionName as CollectionName];
     console.log(`Inserting data into collection "${collectionName}"...`);
     for (const item of data[collectionName]) {
         // FIXME: basket field is not yet supported
         // @ts-expect-error
         const { basket, ...itemWithoutBasket } = item;
         await databases.createDocument(
-            databaseId,
-            collectionId,
-            ID.unique(),
+            'admin',
+            collectionName,
+            // FIXME: createDocument considers 0 to be an invalid ID
+            item.id ? item.id.toString() : ID.unique(),
             itemWithoutBasket,
             [
                 Permission.read(Role.users()),
