@@ -247,6 +247,7 @@ await databases.createRelationshipAttribute(
 );
 
 console.log('Generating data...');
+// @ts-expect-error - Dunno why this is necessary, but the import is not recognized
 const data = generateData.default();
 
 // FIXME - Give 10 seconds for the schema to be updated
