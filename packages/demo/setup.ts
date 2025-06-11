@@ -1,8 +1,17 @@
 import generateData from 'data-generator-retail';
 import * as appwrite from 'node-appwrite';
-import { ID, Permission, Role, Query } from 'node-appwrite';
+import {
+    ID,
+    Permission,
+    Role,
+    Query,
+    RelationshipType,
+    RelationMutate,
+} from 'node-appwrite';
 import dotenv from 'dotenv';
 import path from 'path';
+
+const MAX_ERRORS = 5;
 
 const forceSeed = process.argv.includes('--force');
 
@@ -44,10 +53,11 @@ console.log('Creating database "admin"...');
 await databases.create('admin', 'admin');
 
 const collections = [
+    'baskets',
+    'orders',
     'customers',
     'categories',
     'products',
-    'orders',
     'invoices',
     'reviews',
 ] as const;
@@ -62,6 +72,10 @@ type Attribute = {
 };
 
 const collectionTypes: Record<CollectionName, Attribute[]> = {
+    baskets: [
+        { key: 'product_id', type: 'integer' },
+        { key: 'quantity', type: 'integer' },
+    ],
     customers: [
         { key: 'id', type: 'integer', required: true },
         { key: 'first_name', type: 'string', size: 100 },
@@ -214,29 +228,59 @@ for (const [collectionName, attributes] of Object.entries(collectionTypes)) {
         }
     }
 }
+// Special case for basket
+await databases.createRelationshipAttribute(
+    'admin', // databaseId
+    'orders', // collectionId
+    'baskets', // relatedCollectionId
+    RelationshipType.OneToMany, // type
+    false, // twoWay (optional)
+    'basket', // key (optional)
+    undefined, // twoWayKey (optional)
+    RelationMutate.Cascade // onDelete (optional)
+);
 
 console.log('Generating data...');
 const data = generateData.default();
 
+// FIXME - Give 10 seconds for the schema to be updated
+// Don't know why this is necessary, but yeah...
+await new Promise(resolve => setTimeout(resolve, 10000));
+
+let errors = 0;
 for (const collectionName of collections) {
+    if (collectionName === 'baskets') {
+        continue;
+    }
     console.log(`Inserting data into collection "${collectionName}"...`);
     for (const item of data[collectionName]) {
-        // FIXME: basket field is not yet supported
-        // @ts-expect-error
-        const { basket, ...itemWithoutBasket } = item;
-        await databases.createDocument(
-            'admin',
-            collectionName,
-            // FIXME: createDocument considers 0 to be an invalid ID
-            item.id ? item.id.toString() : ID.unique(),
-            itemWithoutBasket,
-            [
-                Permission.read(Role.users()),
-                Permission.write(Role.users()),
-                Permission.update(Role.users()),
-                Permission.delete(Role.users()),
-            ]
-        );
+        try {
+            await databases.createDocument(
+                'admin',
+                collectionName,
+                // FIXME: createDocument considers 0 to be an invalid ID
+                item.id ? item.id.toString() : ID.unique(),
+                item,
+                [
+                    Permission.read(Role.users()),
+                    Permission.write(Role.users()),
+                    Permission.update(Role.users()),
+                    Permission.delete(Role.users()),
+                ]
+            );
+        } catch (error) {
+            console.error(
+                `Error inserting item into collection "${collectionName}":`,
+                { error, item }
+            );
+            errors++;
+            if (errors >= MAX_ERRORS) {
+                console.error(
+                    `Reached maximum error limit of ${MAX_ERRORS}. Exiting.`
+                );
+                process.exit(1);
+            }
+        }
     }
 }
 
