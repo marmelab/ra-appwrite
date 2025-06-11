@@ -38,6 +38,37 @@ const client = new appwrite.Client()
     .setProject(process.env.APPWRITE_SITE_PROJECT_ID)
     .setKey(process.env.APPWRITE_SITE_STANDARD_KEY);
 
+const users = new appwrite.Users(client);
+
+let user;
+try {
+    user = await users.get('johndoe');
+} catch {}
+
+if (user) {
+    if (forceSeed) {
+        console.log(
+            'User "john.doe@marmelab.com" already exists. Deleting user...'
+        );
+        await users.delete('johndoe');
+    } else {
+        console.log(
+            'User "john.doe@marmelab.com" already exists. Use --force to recreate it.'
+        );
+        console.log('Exiting.');
+        process.exit(0);
+    }
+}
+
+console.log('Creating user "john.doe@marmelab.com"...');
+await users.create(
+    'johndoe',
+    'john.doe@marmelab.com',
+    undefined,
+    'changeme',
+    'John Doe'
+);
+
 const databases = new appwrite.Databases(client);
 
 const result = await databases.list([Query.equal('name', ['admin'])]);
