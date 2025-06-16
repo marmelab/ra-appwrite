@@ -22,6 +22,9 @@ Then run the following commands at the root of the repository:
 # Install dependencies
 make install
 
+# Build the packages
+make build
+
 # Create the database, collections and users
 make db-seed
 
