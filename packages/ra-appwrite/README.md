@@ -17,7 +17,7 @@ npm install ra-appwrite
 
 ## Usage
 
-In the [Appwrite console](https://cloud.appwrite.io/console/organization-67af6d36000169d2c8a9), in the Auth menu, create a new user by entering an email and a password.
+In the [Appwrite console](https://cloud.appwrite.io/console), in the Auth menu, create a new user by entering an email and a password.
 
 Still in the AppWrite console, create a new project and a new database in this project. Then, create collections in the database (e.g. 'contacts', 'companies', etc). For each collection, in the "Settings" tab, add a Permission for the user that you've created.
 
