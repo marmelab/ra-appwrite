@@ -13,10 +13,10 @@ const Login = () => {
     const translate = useTranslate();
     return (
         <RaLogin sx={{ background: 'none' }}>
-            <Typography color="text.disabled" textAlign="center">
-                Hint: john.doe@marmelab.com / changeme
-            </Typography>
             <LoginForm>
+                <Typography color="text.disabled" textAlign="center">
+                    Hint: john.doe@marmelab.com / changeme
+                </Typography>
                 <TextInput
                     autoFocus
                     source="email"
