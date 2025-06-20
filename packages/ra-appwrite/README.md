@@ -19,7 +19,7 @@ npm install ra-appwrite
 
 In the [Appwrite console](https://cloud.appwrite.io/console), in the Auth menu, create a new user by entering an email and a password.
 
-Still in the AppWrite console, create a new project and a new database in this project. Then, create collections in the database (e.g. 'contacts', 'companies', etc). For each collection, in the "Settings" tab, add a Permission for the user that you've created.
+Still in the Appwrite console, create a new project and a new database in this project. Then, create collections in the database (e.g. 'contacts', 'companies', etc). For each collection, in the "Settings" tab, add a Permission for the user that you've created.
 
 You will need the project ID, database ID, and collection IDs to initialize your admin. And since the default react-admin login page uses a username and password, you will need to override it with a login page using email and password.
 

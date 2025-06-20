@@ -1,6 +1,6 @@
-# React-admin Demo With AppWrite
+# React-admin Demo With Appwrite
 
-This is a demo of the [AppWrite](https://appwrite.io/) adapter for [react-admin](https://github.com/marmelab/react-admin).
+This is a demo of the [Appwrite](https://appwrite.io/) adapter for [react-admin](https://github.com/marmelab/react-admin).
 
 To explore the source code, start with [src/App.tsx](https://github.com/marmelab/ra-appwrite/blob/main/packages/demo/src/App.tsx).
 
