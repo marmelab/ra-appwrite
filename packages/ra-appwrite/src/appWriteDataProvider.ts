@@ -8,7 +8,7 @@ import {
     Role,
     ID,
 } from 'appwrite';
-import omit from 'lodash/omit';
+import omit from 'lodash/omit.js';
 
 import {
     buildFilterQueries,
