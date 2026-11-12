@@ -1,7 +1,7 @@
 {
     "name": "ra-appwrite-repo",
     "private": true,
-    "version": "1.0.0",
+    "version": "2.0.0",
     "repository": "git@github.com:marmelab/ra-appwrite.git",
     "author": "Francois Zaninotto",
     "license": "MIT",

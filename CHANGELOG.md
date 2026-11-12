@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## v2.0.0
 
 -   Publish modern ESM and CommonJS package exports ([#8](https://github.com/marmelab/ra-appwrite/pull/8))
 
@@ -11,3 +11,12 @@
 -   the old build folders: `ra-appwrite/lib/*` and `ra-appwrite/esm/*`
 -   the sources: `ra-appwrite/src/*`, even though they are still published
 -   the manifest: `ra-appwrite/package.json`
+
+## v1.1.0
+
+- Bump react-admin minimal version to 5.6
+- Deprecate LoginForm to use react-admin's LoginWithEmail
+
+## v1.0.0
+
+Initial release
