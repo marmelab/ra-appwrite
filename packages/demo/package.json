@@ -4,8 +4,8 @@
     "private": true,
     "type": "module",
     "dependencies": {
-        "@mui/icons-material": "^7.1.1",
-        "@mui/material": "^7.1.1",
+        "@mui/icons-material": "^9.5.0",
+        "@mui/material": "^9.5.0",
         "appwrite": "^17.0.0",
         "clsx": "^2.1.1",
         "data-generator-retail": "^5.0.0",
