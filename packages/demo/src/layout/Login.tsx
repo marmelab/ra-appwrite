@@ -14,7 +14,7 @@ const Login = () => {
     return (
         <RaLogin sx={{ background: 'none' }}>
             <LoginForm>
-                <Typography color="text.disabled" sx={{ textAlign: 'center' }}>
+                <Typography color="textDisabled" sx={{ textAlign: 'center' }}>
                     Hint: john.doe@marmelab.com / changeme
                 </Typography>
                 <TextInput

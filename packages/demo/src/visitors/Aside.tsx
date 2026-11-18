@@ -97,7 +97,7 @@ const EventList = () => {
                                     />
                                     <Link
                                         variant="body2"
-                                        flexGrow={1}
+                                        sx={{ flexGrow: 1 }}
                                         to={{
                                             pathname: '/orders',
                                             search: `displayedFilters=${JSON.stringify(
@@ -135,7 +135,7 @@ const EventList = () => {
                                     />
                                     <Link
                                         variant="body2"
-                                        flexGrow={1}
+                                        sx={{ flexGrow: 1 }}
                                         to={{
                                             pathname: '/reviews',
                                             search: `displayedFilters=${JSON.stringify(
