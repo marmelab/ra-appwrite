@@ -38,10 +38,6 @@
         "typescript": "^5.5.4",
         "whatwg-fetch": "^3.0.0"
     },
-    "resolutions": {
-        "@mui/icons-material": "^7.1.1",
-        "@mui/material": "^7.1.1"
-    },
     "scripts": {
         "build": "yarn workspaces foreach -At run build",
         "build-demo": "cd packages/demo && yarn build",

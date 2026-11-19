@@ -103,7 +103,7 @@ const PendingReviews = () => {
                     </ListItem>
                 ))}
             </List>
-            <Box flexGrow={1}>&nbsp;</Box>
+            <Box sx={{ flexGrow: 1 }}>&nbsp;</Box>
             <Button
                 sx={{ borderRadius: 0 }}
                 component={Link}
@@ -111,7 +111,7 @@ const PendingReviews = () => {
                 size="small"
                 color="primary"
             >
-                <Box p={1} sx={{ color: 'primary.main' }}>
+                <Box sx={{ p: 1, color: 'primary.main' }}>
                     {translate('pos.dashboard.all_reviews')}
                 </Box>
             </Button>

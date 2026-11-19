@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useState } from 'react';
-import { Box } from '@mui/material';
+import { MenuList } from '@mui/material';
 import LabelIcon from '@mui/icons-material/Label';
 import {
     useTranslate,
@@ -35,7 +35,9 @@ const Menu = ({ dense = false }: MenuProps) => {
     };
 
     return (
-        <Box
+        // MUI 9 menu items must be rendered inside a MenuList
+        <MenuList
+            disablePadding
             sx={{
                 width: open ? 200 : 50,
                 marginTop: 1,
@@ -139,7 +141,7 @@ const Menu = ({ dense = false }: MenuProps) => {
                 leftIcon={<reviews.icon />}
                 dense={dense}
             />
-        </Box>
+        </MenuList>
     );
 };
 
