@@ -59,6 +59,8 @@ const OrderChart = (props: { orders?: Order[] }) => {
                     min: addDays(aMonthAgo, 1).getTime(),
                     max: new Date().getTime(),
                     axisLabel: {
+                        // echarts 6 renders both the month-start tick and the regular one next to it
+                        hideOverlap: true,
                         formatter: (value: number) => dateFormatter(value),
                     },
                 },

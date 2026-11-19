@@ -17,11 +17,7 @@ const StarRatingField = (props: OwnProps) => {
     return (
         <Box
             component="span"
-            display="flex"
-            sx={{
-                opacity: 0.87,
-                whiteSpace: 'nowrap',
-            }}
+            sx={{ display: 'flex', opacity: 0.87, whiteSpace: 'nowrap' }}
         >
             {Array(record.rating)
                 .fill(true)

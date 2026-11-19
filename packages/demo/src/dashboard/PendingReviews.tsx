@@ -20,8 +20,6 @@ import {
     useIsDataLoaded,
 } from 'react-admin';
 
-import { stringify } from 'query-string';
-
 import CardWithIcon from './CardWithIcon';
 import StarRatingField from '../reviews/StarRatingField';
 import { Customer, Review } from '../types';
@@ -52,9 +50,9 @@ const PendingReviews = () => {
         <CardWithIcon
             to={{
                 pathname: '/reviews',
-                search: stringify({
+                search: new URLSearchParams({
                     filter: JSON.stringify({ status: 'pending' }),
-                }),
+                }).toString(),
             }}
             icon={CommentIcon}
             title={translate('pos.dashboard.pending_reviews')}
@@ -105,7 +103,7 @@ const PendingReviews = () => {
                     </ListItem>
                 ))}
             </List>
-            <Box flexGrow={1}>&nbsp;</Box>
+            <Box sx={{ flexGrow: 1 }}>&nbsp;</Box>
             <Button
                 sx={{ borderRadius: 0 }}
                 component={Link}
@@ -113,7 +111,7 @@ const PendingReviews = () => {
                 size="small"
                 color="primary"
             >
-                <Box p={1} sx={{ color: 'primary.main' }}>
+                <Box sx={{ p: 1, color: 'primary.main' }}>
                     {translate('pos.dashboard.all_reviews')}
                 </Box>
             </Button>
